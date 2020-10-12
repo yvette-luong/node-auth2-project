@@ -1,26 +1,7 @@
-
-exports.seed = function(knex) {
-  const users = [
-    {
-      username:"", // will get id 1
-      password:""
-    },
-    // {
-    //   username:"", // will get id 2
-    //   password:""
-    // },
-    // {
-    //   username: "", // will get id 3
-    //   password:""
-    // },
-    // {
-    //   username: "", // will get id 4
-    //   password:""
-    // },
-  
-  ];
-
-      // Inserts seed entries
-      return knex('users').insert(users);
-
+exports.seed = function (knex) {
+  return knex("users").insert([
+      { username: "", password: "" },
+      // { username: "test1", password: "testone" },
+      // { username: "test2", password: "test 2" },
+  ]);
 };
