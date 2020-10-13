@@ -2,15 +2,14 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
-
-const KnexSessionStore = require("connect-session-knex")
+const KnexSessionStore = require("connect-session-knex")(session)
 
 const usersRouter = require("../users/users-router");
-const protected = require("../auth/protected-mw.js");
-
 const authRouter = require("../auth/auth-router.js");
-
+const protected = require("../auth/protected-mw.js");
 const connection = require("../database/knexconnection")
+
+
 const server = express();
 
 const sessionConfiguration = {
@@ -23,13 +22,13 @@ const sessionConfiguration = {
     },
     resave: false, // re save the session information even if there are no changes
     saveUninitialized: true, // read about GDPR compliance
-    // store: new KnexSessionStore({
-    //     knex: connection, // connection to the database
-    //     tablename: "sessions",
-    //     sidfieldname: "sid", // name of session id column
-    //     createtable: true, // if the table doesn't exist, create it
-    //     clearInterval: 1000 * 60 * 60, // remove expired sessions from the database every hour
-    // }),
+    store: new KnexSessionStore({
+        knex: connection, // connection to the database
+        tablename: "sessions",
+        sidfieldname: "sid", // name of session id column
+        createtable: true, // if the table doesn't exist, create it
+        clearInterval: 1000 * 60 * 60, // remove expired sessions from the database every hour
+    }),
 };
 
 
