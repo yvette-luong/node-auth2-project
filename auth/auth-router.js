@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const bcryptjs = require("bcryptjs"); // npm i bcryptjs
-
+const session = require("express-session");
 const Users = require("../users/users-model");
 
 // /auth/register
@@ -34,7 +34,7 @@ router.post("/login", (req, res) => {
 
             if (user && bcryptjs.compareSync(credentials.password, user.password)) {
                 // username and password are good
-                req.username = user.username;
+                req.session.username = user.username;
 
                 res.status(200).json({
                     message: "welcome",
