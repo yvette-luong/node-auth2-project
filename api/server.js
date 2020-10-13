@@ -10,7 +10,7 @@ const protected = require("../auth/protected-mw.js");
 
 const authRouter = require("../auth/auth-router.js");
 
-// const connection = require("../database/knexconnection")
+const connection = require("../database/knexconnection")
 const server = express();
 
 server.use(helmet());
@@ -19,7 +19,7 @@ server.use(cors());
 // server.use(session(sessionConfiguration));
 
 server.use("/api/auth", authRouter);
-server.use("/api/users", usersRouter);
+server.use("/api/users", protected, usersRouter);
 
 server.get("/", (req, res) => {
     res.json({ api: "Introduction to Authentication", session: req.session });
